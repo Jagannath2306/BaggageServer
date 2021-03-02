@@ -3,23 +3,23 @@ import { model } from 'mongoose';
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: false
+        required: true
     },
     email: {
         type: String,
-        required: false
+        required: true
     },
     password: {
         type: String,
-        required: false
+        required: true
     },
     phone: {
         type: Number,
-        required: false
+        required: true
     },
     dateOfBirth: {
         type: String,
-        required: false
+        required: true
     },
     address: {
         type: Array,
@@ -40,7 +40,18 @@ const userSchema = new mongoose.Schema({
     profilePhoto: {
         type: String,
         required: false
+    },
+    created_at: {
+        type: String,
+        required: false,
+        default: new Date()
+    },
+    updated_at: {
+        type: String,
+        required: false,
+        default: new Date()
     }
+
 });
 
 export default model('Users', userSchema);

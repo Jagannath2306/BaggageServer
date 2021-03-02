@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
+import { UserValidators } from '../validators/UserValidators';
 
 class UserRouter {
     public router: Router;
@@ -18,7 +19,7 @@ class UserRouter {
         this.router.post('/login', UserController.login);
     }
     postRoutes() {
-        this.router.post('/signup', UserController.Signup);
+        this.router.post('/signup', UserValidators.SignUp(), UserController.SignUp);
     }
     patchRoutes() {
 
