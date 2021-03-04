@@ -14,9 +14,15 @@ export class UserValidators {
                     }
                 })
             }),
-            body("password", "Password is Required").isAlphanumeric(),
-            body("password", "Password must be from 8 - 20 Characters only.").isLength({ min: 8, max: 20 })
 
+            body("password", "Password is Required").isString(), body("password", "Password must be from 8 - 20 Characters only.").isLength({ min: 8, max: 20 })
+        ]
+    }
+
+    static verifyUser() {
+        return [
+            body("verification_token", "Verification Token is Required").isNumeric(),
+            body("email", "Email is Required").isEmail()
         ]
     }
 }

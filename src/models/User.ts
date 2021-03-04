@@ -23,33 +23,46 @@ const userSchema = new mongoose.Schema({
     },
     address: {
         type: Array,
-        required: false
+        required: true
     },
     cart: {
         type: Array,
-        required: false
+        required: true
     },
     histories: {
         type: Array,
-        required: false
+        required: true
     },
     cards: {
         type: Array,
-        required: false
+        required: true
     },
     profilePhoto: {
         type: String,
-        required: false
+        required: true
     },
     created_at: {
-        type: String,
-        required: false,
+        type: Date,
+        required: true,
         default: new Date()
     },
     updated_at: {
-        type: String,
-        required: false,
+        type: Date,
+        required: true,
         default: new Date()
+    },
+    verified: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    verification_token: {
+        type: Number,
+        required: true
+    },
+    verification_token_time: {
+        type: Date,
+        required: true,
     }
 
 });
