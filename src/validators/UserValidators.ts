@@ -22,14 +22,28 @@ export class UserValidators {
 
     static verifyUser() {
         return [
-            body("verification_token", "Verification Token is Required").isNumeric(),
-            body("email", "Email is Required").isEmail()
+            body("verification_token", "Verification Token is Required").isNumeric()
         ]
     }
 
     static resendVerificationEmail() {
         return [
-            query("email").isEmail()
+            query("email", "Email is Required").isEmail()
+        ]
+    }
+    static login() {
+        return [
+            query("email", "Email is Required").isEmail().custom((email, { req }) => {
+                return User.findOne({ email: email }).then((user) => {
+                    if (user) {
+                        req.user = user;
+                        return true;
+                    } else {
+                        throw new Error("User Does Not Exist");
+                    }
+                })
+            }),
+            query("password", "Password is Required").isAlphanumeric()
         ]
     }
 }
