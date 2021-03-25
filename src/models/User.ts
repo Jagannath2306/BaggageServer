@@ -63,8 +63,15 @@ const userSchema = new mongoose.Schema({
     verification_token_time: {
         type: Date,
         required: true,
+    },
+    reset_password_token: {
+        type: Number,
+        required: false
+    },
+    reset_password_token_time: {
+        type: Date,
+        required: false
     }
-
 });
 
 export default model('Users', userSchema);

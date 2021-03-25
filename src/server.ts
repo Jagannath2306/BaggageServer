@@ -35,11 +35,11 @@ export class Server {
     configureBodyParser() {
         const bodyParser = require("body-parser")
         this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use(bodyParser.urlencoded({ extended: true }));
     }
 
     setRoutes() {
-        this.app.use('/api/user', UserRouter)
+        this.app.use('/src/uploads', express.static('src/uploads'));
+        this.app.use('/api/user', UserRouter);
     }
 
     error404Handler() {

@@ -118,4 +118,87 @@ export class UserController {
 
     }
 
+    static async updatePassword(req, res, next) {
+        const user_id = req.user.user_id;
+        const password = req.body.password;
+        const newPassword = req.body.new_password;
+        console.log(user_id + password + newPassword)
+        try {
+            User.findOne({ "_id": user_id }).then(async (user: any) => {
+                await Utils.passwordCompare({ "password": password, "encryptPassword": user.password });
+                const encryptPassword = await Utils.encryptPassword(newPassword);
+                const newUser = await User.findOneAndUpdate({ "_id": user_id }, { "password": encryptPassword }, { new: true });
+                res.send(newUser);
+            })
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    static async sendResetPasswordEmail(req, res, next) {
+        const email = req.query.email;
+        const resetPasswordToken = Utils.generateVerificationToken();
+        try {
+            const updatedUser = await User.findOneAndUpdate(
+                { "email": email },
+                {
+                    "updated_at": new Date,
+                    "reset_password_token": resetPasswordToken,
+                    "reset_password_token_time": Date.now() + new Utils().MAX_TOKEN_TIME
+                },
+                {
+                    new: true
+                }
+            );
+            res.send(updatedUser);
+            await NodeMailer.sendEmail({
+                to: [email],
+                subject: 'Reset Password Email',
+                html: `<h2>Hello Dear </h2><h3>Good Day!!! </h3> <p>Your Reset Password code is : ${resetPasswordToken}</p> <br/><br/><p> We are happy to see you with us.</p>`
+            });
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static verifyResetPasswordToken(req, res, next) {
+        res.send('Your password has been updated successfully');
+    }
+
+    static async resetPassword(req, res, next) {
+        const user = req.user;
+        const newPassword = req.body.new_password;
+        try {
+            const encryptPassword = await Utils.encryptPassword(newPassword);
+            const updatedUser = await User.findOneAndUpdate(
+                { "_id": user._id },
+                {
+                    "updated_at": new Date(),
+                    "password": encryptPassword
+                },
+                {
+                    new: true
+                }
+            )
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    static async uploadProfilePic(req, res, next) {
+        const userId = req.user.user_id;
+        const fileUrl = 'http://localhost:4000/' + req.file.path.replaceAll('\\', '/');
+        try {
+            const user = await User.findOneAndUpdate({
+                _id: userId
+            },
+                {
+                    updated_at: new Date(),
+                    profilePhoto: fileUrl
+                }, { new: true })
+            res.send(user)
+        } catch (e) {
+            next(e);
+        }
+    }
 }

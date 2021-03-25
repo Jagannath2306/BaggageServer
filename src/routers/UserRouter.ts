@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
 import { GlobalMiddleWare } from '../middlewares/globalMiddleware';
+import { Utils } from '../utils/utils';
 import { UserValidators } from '../validators/UserValidators';
 
 class UserRouter {
@@ -19,6 +20,8 @@ class UserRouter {
     getRoutes() {
         this.router.get('/send/verification/email', GlobalMiddleWare.authenticate, UserController.ResendVerificationEmail);
         this.router.get('/login', UserValidators.login(), GlobalMiddleWare.checkError, UserController.login);
+        this.router.get('/reset/password', UserValidators.sendResetPasswordEmail(), GlobalMiddleWare.checkError, UserController.sendResetPasswordEmail);
+        this.router.get('/verify/resetPasswordToken', UserValidators.verifyResetPasswordToken(), GlobalMiddleWare.checkError, UserController.verifyResetPasswordToken);
     }
     
     postRoutes() {
@@ -27,6 +30,10 @@ class UserRouter {
 
     patchRoutes() {
         this.router.patch('/verify', UserValidators.verifyUser(), GlobalMiddleWare.checkError, GlobalMiddleWare.authenticate, UserController.Verify);
+        this.router.patch('/update/password', UserValidators.updatePassword(), GlobalMiddleWare.checkError, GlobalMiddleWare.authenticate, UserController.updatePassword);
+        this.router.patch('/reset/password', UserValidators.resetPassword(), GlobalMiddleWare.checkError, UserController.resetPassword);
+        this.router.patch('/update/profilePic', GlobalMiddleWare.authenticate,
+            new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);
     }
 
     deleteRoutes() {
