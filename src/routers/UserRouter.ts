@@ -29,8 +29,8 @@ class UserRouter {
     }
 
     patchRoutes() {
-        this.router.patch('/verify', UserValidators.verifyUser(), GlobalMiddleWare.checkError, GlobalMiddleWare.authenticate, UserController.Verify);
-        this.router.patch('/update/password', UserValidators.updatePassword(), GlobalMiddleWare.checkError, GlobalMiddleWare.authenticate, UserController.updatePassword);
+        this.router.patch('/verify', GlobalMiddleWare.authenticate, UserValidators.verifyUser(), GlobalMiddleWare.checkError, UserController.Verify);
+        this.router.patch('/update/password', GlobalMiddleWare.authenticate, UserValidators.updatePassword(), GlobalMiddleWare.checkError, UserController.updatePassword);
         this.router.patch('/reset/password', UserValidators.resetPassword(), GlobalMiddleWare.checkError, UserController.resetPassword);
         this.router.patch('/update/profilePic', GlobalMiddleWare.authenticate,
             new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);

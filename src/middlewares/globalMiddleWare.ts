@@ -20,11 +20,11 @@ export class GlobalMiddleWare {
         const token = authHeader ? authHeader.slice(7, authHeader.isLength) : null;
 
         try {
-            req.errorStatus = 401;
             Jwt.verify(token, getEnvironmentVariables().jwt_secret, ((err, decoded) => {
                 if (err) {
                     next(err);
                 } else if (!decoded) {
+                    req.errorStatus = 401;
                     next(new Error('User Not Authorised'));
                 } else {
                     req.user = decoded;
@@ -32,6 +32,7 @@ export class GlobalMiddleWare {
                 }
             }))
         } catch (e) {
+            req.errorStatus = 401;
             next(e);
         }
     }

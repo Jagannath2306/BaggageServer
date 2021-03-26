@@ -122,14 +122,12 @@ export class UserController {
         const user_id = req.user.user_id;
         const password = req.body.password;
         const newPassword = req.body.new_password;
-        console.log(user_id + password + newPassword)
         try {
-            User.findOne({ "_id": user_id }).then(async (user: any) => {
-                await Utils.passwordCompare({ "password": password, "encryptPassword": user.password });
-                const encryptPassword = await Utils.encryptPassword(newPassword);
-                const newUser = await User.findOneAndUpdate({ "_id": user_id }, { "password": encryptPassword }, { new: true });
-                res.send(newUser);
-            })
+            const user: any = await User.findOne({ "_id": user_id });
+            await Utils.passwordCompare({ "password": password, "encryptPassword": user.password });
+            const encryptPassword = await Utils.encryptPassword(newPassword);
+            const newUser = await User.findOneAndUpdate({ "_id": user_id }, { "password": encryptPassword }, { new: true });
+            res.send(newUser);
         } catch (e) {
             next(e);
         }
@@ -180,6 +178,7 @@ export class UserController {
                     new: true
                 }
             )
+            res.send(updatedUser);
         } catch (e) {
             next(e);
         }

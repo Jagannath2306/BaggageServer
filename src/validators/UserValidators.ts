@@ -50,9 +50,9 @@ export class UserValidators {
     static updatePassword() {
         return [
             body("password", "Password is Required").isAlphanumeric(),
-            body("conform_password", "Conform Password is Required").isAlphanumeric(),
+            body("confirm_password", "Confirm Password is Required").isAlphanumeric(),
             body("new_password", "New Password is Required").isAlphanumeric().custom((newPassword, { req }) => {
-                if (newPassword === req.body.conform_password) {
+                if (newPassword === req.body.confirm_password) {
                     return true;
                 } else {
                     throw new Error('Password and Conform Password Does Not Match.');
@@ -114,7 +114,8 @@ export class UserValidators {
             }),
             body('confirm_password', 'Confirm Password Is Required').isAlphanumeric(),
             body('reset_password_token', 'Reset Password Token Is Required').isNumeric().custom((token, { req }) => {
-                if (req.user.reset_password_token === token) {
+                console.log(token)
+                if (Number(req.user.reset_password_token) === Number(token)) {
                     return true;
                 } else {
                     req.errorStatus = 422;
