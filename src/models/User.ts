@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    cart: {
+    histories: {
         type: Array,
         required: true
     },
-    histories: {
+    cart: {
         type: Array,
         required: true
     },
