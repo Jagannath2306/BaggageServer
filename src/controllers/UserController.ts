@@ -44,7 +44,11 @@ export class UserController {
                     await NodeMailer.sendEmail({
                         to: data.email,
                         subject: 'Email varification',
-                        html: `<h2>Hello ${data.name} </h2><h3>Good Day!!! , Welcome to BaggageApp </h3> <p>Your Email varification code is : ${verificationToken}</p> <br/><br/><p> We are happy to see you with us.</p>`
+                        html: `<h2>Hello ${data.name}, </h2>
+                        <h3>Welcome to BaggageApp </h3> 
+                        <h3> You have been Successfull Singed in to Baggage App </h3>
+                        <h3>Click <a href='http://localhost:4200/user'>here</a> to Login</h3>
+                         <br/><br/><p> We are happy to see you with us.</p>`
                     });
                 res.send(user);
         } catch (e) {

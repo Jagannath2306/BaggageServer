@@ -15,31 +15,31 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: Number,
-        required: true
+        required: false
     },
     dateOfBirth: {
         type: String,
-        required: true
+        required: false
     },
     address: {
         type: Array,
-        required: true
+        required: false
     },
     histories: {
         type: Array,
-        required: true
+        required: false
     },
     cart: {
         type: Array,
-        required: true
+        required: false
     },
     cards: {
         type: Array,
-        required: true
+        required: false
     },
     profilePhoto: {
         type: String,
-        required: true
+        required: false
     },
     created_at: {
         type: Date,

@@ -1,8 +1,24 @@
 import bodyParser = require('body-parser');
+import * as cors from 'cors';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import { getEnvironmentVariables } from './environments/env';
 import UserRouter from './routers/UserRouter';
+
+const options: cors.CorsOptions = {
+    allowedHeaders: [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept',
+        'X-Access-Token',
+        "Authorization"
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    origin: "*",
+    preflightContinue: false,
+};
 
 export class Server {
     public app: express.Application = express();
@@ -34,7 +50,9 @@ export class Server {
 
     configureBodyParser() {
         const bodyParser = require("body-parser")
+        this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use("*", cors(options));
     }
 
     setRoutes() {

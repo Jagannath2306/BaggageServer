@@ -4,6 +4,7 @@ import User from '../models/User';
 
 export class UserValidators {
     static SignUp() {
+        console.log(body);
         return [
             body("name", "Name is Required").isString(),
             body("email", "Email is Required").isEmail().custom((email, { req }) => {
@@ -15,7 +16,6 @@ export class UserValidators {
                     }
                 })
             }),
-
             body("password", "Password is Required").isString(), body("password", "Password must be from 8 - 20 Characters only.").isLength({ min: 8, max: 20 })
         ]
     }
