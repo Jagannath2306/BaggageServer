@@ -4,7 +4,6 @@ import User from '../models/User';
 
 export class UserValidators {
     static SignUp() {
-        console.log(body);
         return [
             body("name", "Name is Required").isString(),
             body("email", "Email is Required").isEmail().custom((email, { req }) => {
@@ -114,7 +113,6 @@ export class UserValidators {
             }),
             body('confirm_password', 'Confirm Password Is Required').isAlphanumeric(),
             body('reset_password_token', 'Reset Password Token Is Required').isNumeric().custom((token, { req }) => {
-                console.log(token)
                 if (Number(req.user.reset_password_token) === Number(token)) {
                     return true;
                 } else {
