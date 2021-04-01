@@ -56,8 +56,6 @@ export class UserController {
         }
     }
 
-
-
     static async Verify(req, res, next) {
         const verificationToken = req.body.verification_token;
         const email = req.user.email;
@@ -203,5 +201,16 @@ export class UserController {
         } catch (e) {
             next(e);
         }
+    }
+
+    static async fatchUser(req, res, next) {
+        const user_id = req.user.user_id;
+        try {
+            const user: any = await User.findOne({ "_id": user_id });
+            res.send(user);
+        } catch (e) {
+            next(e)
+        }
+
     }
 }

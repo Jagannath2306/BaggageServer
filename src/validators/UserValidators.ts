@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, header } from 'express-validator';
 import { query } from 'express-validator';
 import User from '../models/User';
 
@@ -130,6 +130,19 @@ export class UserValidators {
                     return true;
                 } else {
                     throw new Error('File not uploaded');
+                }
+            })
+        ]
+    }
+    static fatch() {
+        console.log();
+        return [
+            query().custom(({ req }) => {
+                console.log(req)
+                if (req.user.email) {
+                    return true;
+                } else {
+                    throw new Error('User Does Not Exits.');
                 }
             })
         ]

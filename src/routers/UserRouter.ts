@@ -22,6 +22,7 @@ class UserRouter {
         this.router.get('/login', UserValidators.login(), GlobalMiddleWare.checkError, UserController.login);
         this.router.get('/reset/password', UserValidators.sendResetPasswordEmail(), GlobalMiddleWare.checkError, UserController.sendResetPasswordEmail);
         this.router.get('/verify/resetPasswordToken', UserValidators.verifyResetPasswordToken(), GlobalMiddleWare.checkError, UserController.verifyResetPasswordToken);
+        this.router.get('/fatch', GlobalMiddleWare.authenticate, GlobalMiddleWare.checkError, UserController.fatchUser);
     }
     
     postRoutes() {
