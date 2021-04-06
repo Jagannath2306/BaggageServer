@@ -7,12 +7,12 @@ import { getEnvironmentVariables } from "../environments/env";
 
 export class UserController {
     static async SignUp(req, res, next) {
-
+        console.log(req.body);
         const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
         const phone = req.body.phone;
-        const dateOfBirth = req.body.dateOfBirth;
+        const dob = req.body.dateOfBirth;
         const address = req.body.address;
         const cart = req.body.cart;
         const histories = req.body.histories;
@@ -29,7 +29,7 @@ export class UserController {
                         email: email,
                         password: hash,
                         phone: phone,
-                        dateOfBirth: dateOfBirth,
+                        dateOfBirth: dob,
                         address: address,
                         cart: cart,
                         histories: histories,
@@ -201,6 +201,34 @@ export class UserController {
         } catch (e) {
             next(e);
         }
+    }
+
+
+    static async UpdateProfile(req, res, next) {
+
+        const user_id = req.user.user_id;
+        const user_name = req.body.name;
+        const user_dob = req.body.dateOfBirth;
+        const user_phone = req.body.phone;
+        const user_address = req.body.address;
+        try {
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: user_id },
+                {
+                    name: user_name,
+                    dateOfBirth: user_dob,
+                    phone: user_phone,
+                    address: user_address
+                },
+                {
+                    new: true
+                }
+            );
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+
     }
 
     static async fatchUser(req, res, next) {

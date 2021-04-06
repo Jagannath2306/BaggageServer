@@ -134,6 +134,12 @@ export class UserValidators {
             })
         ]
     }
+    static updateProfile() {
+        return [
+            body("")
+        ]
+    }
+
     static fatch() {
         console.log();
         return [
