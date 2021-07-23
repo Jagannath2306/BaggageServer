@@ -7,7 +7,6 @@ import { getEnvironmentVariables } from "../environments/env";
 
 export class UserController {
     static async SignUp(req, res, next) {
-        console.log(req.body);
         const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
@@ -24,33 +23,33 @@ export class UserController {
 
         try {
             const hash = await Utils.encryptPassword(password);
-                    const data = {
-                        name: name,
-                        email: email,
-                        password: hash,
-                        phone: phone,
-                        dateOfBirth: dob,
-                        address: address,
-                        cart: cart,
-                        histories: histories,
-                        cards: cards,
-                        profilePhoto: profilePhoto,
-                        created_at: created_at,
-                        updated_at: updated_at,
-                        verification_token: verificationToken,
-                        verification_token_time: Date.now() + new Utils().MAX_TOKEN_TIME
-                    }
-                    let user = await new User(data).save();
-                    await NodeMailer.sendEmail({
-                        to: data.email,
-                        subject: 'Email varification',
-                        html: `<h2>Hello ${data.name}, </h2>
+            const data = {
+                name: name,
+                email: email,
+                password: hash,
+                phone: phone,
+                dateOfBirth: dob,
+                address: address,
+                cart: cart,
+                histories: histories,
+                cards: cards,
+                profilePhoto: profilePhoto,
+                created_at: created_at,
+                updated_at: updated_at,
+                verification_token: verificationToken,
+                verification_token_time: Date.now() + new Utils().MAX_TOKEN_TIME
+            }
+            let user = await new User(data).save();
+            await NodeMailer.sendEmail({
+                to: data.email,
+                subject: 'Email varification',
+                html: `<h2>Hello ${data.name}, </h2>
                         <h3>Welcome to BaggageApp </h3> 
                         <h3> You have been Successfull Singed in to Baggage App </h3>
                         <h3>Click <a href='http://localhost:4200/user'>here</a> to Login</h3>
                          <br/><br/><p> We are happy to see you with us.</p>`
-                    });
-                res.send(user);
+            });
+            res.send(user);
         } catch (e) {
             next(e);
         }

@@ -24,7 +24,7 @@ class UserRouter {
         this.router.get('/verify/resetPasswordToken', UserValidators.verifyResetPasswordToken(), GlobalMiddleWare.checkError, UserController.verifyResetPasswordToken);
         this.router.get('/fatch', GlobalMiddleWare.authenticate, GlobalMiddleWare.checkError, UserController.fatchUser);
     }
-    
+
     postRoutes() {
         this.router.post('/signup', UserValidators.SignUp(), GlobalMiddleWare.checkError, UserController.SignUp);
     }
@@ -36,8 +36,8 @@ class UserRouter {
         this.router.patch('/update/profile', GlobalMiddleWare.authenticate, GlobalMiddleWare.checkError, UserController.UpdateProfile);
         this.router.patch('/update/profilePic', GlobalMiddleWare.authenticate,
             new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);
-       
-        }
+
+    }
 
     deleteRoutes() {
 

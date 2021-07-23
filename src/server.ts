@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import { getEnvironmentVariables } from './environments/env';
+import ProductsRouter from './routers/ProductsRouter';
 import UserRouter from './routers/UserRouter';
 
 const options: cors.CorsOptions = {
@@ -58,6 +59,7 @@ export class Server {
     setRoutes() {
         this.app.use('/src/uploads', express.static('src/uploads'));
         this.app.use('/api/user', UserRouter);
+        // this.app.use('/api/product', ProductsRouter);
     }
 
     error404Handler() {
