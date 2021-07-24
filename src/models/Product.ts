@@ -1,77 +1,82 @@
 import * as mongoose from 'mongoose';
 import { model } from 'mongoose';
 const ProductSchema = new mongoose.Schema({
-    name: {
+    itemModelNumber: {
         type: String,
-        required: true
+        required: false
     },
-    email: {
+    itemName: {
         type: String,
-        required: true
+        required: false
     },
-    password: {
+    itemTitle: {
         type: String,
-        required: true
+        required: false
     },
-    phone: {
+    itemBrand: {
+        type: String,
+        required: false
+    },
+    itemColor: {
+        type: String,
+        required: false
+    },
+    itemPrice: {
         type: Number,
         required: false
     },
-    dateOfBirth: {
-        type: Date,
+    itemPriceOnOffer: {
+        type: Number,
         required: false
     },
-    address: {
-        type: Array,
-        required: false
-    },
-    histories: {
-        type: Array,
-        required: false
-    },
-    cart: {
-        type: Array,
-        required: false
-    },
-    cards: {
-        type: Array,
-        required: false
-    },
-    profilePhoto: {
+    itemDescription: {
         type: String,
         required: false
     },
-    created_at: {
-        type: Date,
-        required: true,
-        default: new Date()
+    itemSpecifications: {
+        type: String,
+        required: false
     },
-    updated_at: {
-        type: Date,
-        required: true,
-        default: new Date()
-    },
-    verified: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    verification_token: {
-        type: Number,
-        required: true
-    },
-    verification_token_time: {
-        type: Date,
-        required: true,
-    },
-    reset_password_token: {
+    itemRatting: {
         type: Number,
         required: false
     },
-    reset_password_token_time: {
-        type: Date,
+    itemLike: {
+        type: Number,
         required: false
-    }
+    },
+    itemUnLike: {
+        type: Number,
+        required: false
+    },
+    itemSold: {
+        type: Number,
+        required: false
+    },
+    itemInStock: {
+        type: Number,
+        required: false
+    },
+    itemImage: {
+        type: String,
+        required: false
+    },
+    itemOccasion: {
+        type: String,
+        required: false
+    },
+    itemQuality: {
+        type: Number,
+        required: false
+    },
+    itemType: {
+        type: String,
+        required: false
+    },
+    itemPattern: {
+        type: String,
+        required: false
+    },
 });
 
 export default model('Products', ProductSchema);

@@ -59,7 +59,7 @@ export class Server {
     setRoutes() {
         this.app.use('/src/uploads', express.static('src/uploads'));
         this.app.use('/api/user', UserRouter);
-        // this.app.use('/api/product', ProductsRouter);
+        this.app.use('/api/product', ProductsRouter);
     }
 
     error404Handler() {

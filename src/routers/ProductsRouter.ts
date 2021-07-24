@@ -1,10 +1,7 @@
 import { Router } from 'express';
 import { ProductsController } from '../controllers/ProductsController';
-import { UserController } from '../controllers/UserController';
 import { GlobalMiddleWare } from '../middlewares/globalMiddleware';
 import { ProductsValidater } from '../validators/ProductsValidators';
-
-
 
 class ProductsRouter {
     public router: Router;
@@ -23,9 +20,9 @@ class ProductsRouter {
 
     }
 
-    // postRoutes() {
-    //     this.router.post('/register', ProductsValidater.RegisterProduct(), ProductsController.RegisterProduct)
-    // }
+    postRoutes() {
+        this.router.post('/register', ProductsValidater.RegisterProduct(), GlobalMiddleWare.checkError, ProductsController.RegisterProduct)
+    }
 
     patchRoutes() {
 
