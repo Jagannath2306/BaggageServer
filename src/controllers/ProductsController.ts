@@ -46,7 +46,7 @@ export class ProductsController {
                 itemPattern: itemPattern,
             }
             let product = await new Products(item).save();
-            res.json(product);
+            res.send(product);
         } catch (e) {
             next(e);
         }
