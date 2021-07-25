@@ -16,12 +16,12 @@ export class ProductsController {
         const itemUnLike = req.body.itemUnLike;
         const itemSold = req.body.itemSold;
         const itemInStock = req.body.itemInStock;
-        const itemImage = req.body.itemImage;
+        //const itemImage = req.body.itemImage;
         const itemOccasion = req.body.itemOccasion;
         const itemQuality = req.body.itemQuality;
         const itemType = req.body.itemType;
         const itemPattern = req.body.itemPattern;
-
+        const fileUrl = 'http://localhost:4000/' + req.file.path.replaceAll('\\', '/');
 
         try {
             const item = {
@@ -39,7 +39,7 @@ export class ProductsController {
                 itemUnLike: itemUnLike,
                 itemSold: itemSold,
                 itemInStock: itemInStock,
-                itemImage: itemImage,
+                itemImage: fileUrl,
                 itemOccasion: itemOccasion,
                 itemQuality: itemQuality,
                 itemType: itemType,

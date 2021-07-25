@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ProductsController } from '../controllers/ProductsController';
 import { GlobalMiddleWare } from '../middlewares/globalMiddleware';
+import { Utils } from '../utils/utils';
 import { ProductsValidater } from '../validators/ProductsValidators';
 
 class ProductsRouter {
@@ -21,7 +22,7 @@ class ProductsRouter {
     }
 
     postRoutes() {
-        this.router.post('/register', ProductsValidater.RegisterProduct(), GlobalMiddleWare.checkError, ProductsController.RegisterProduct)
+        this.router.post('/register', new Utils().Multer.single('itemImage'), ProductsValidater.RegisterProduct(), GlobalMiddleWare.checkError, ProductsController.RegisterProduct)
     }
 
     patchRoutes() {
