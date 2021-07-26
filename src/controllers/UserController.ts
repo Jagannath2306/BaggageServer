@@ -42,12 +42,12 @@ export class UserController {
             let user = await new User(data).save();
             await NodeMailer.sendEmail({
                 to: data.email,
-                subject: 'Email varification',
-                html: `<h2>Hello ${data.name}, </h2>
-                        <h3>Welcome to BaggageApp </h3> 
+                subject: 'BaggageApp - Your Registration Details',
+                html: `<h2>Dear ${data.name}, </h2>
+                        <h3>Welcome and thank you for registering with <a>BaggageApp</a> </h3>
                         <h3> You have been Successfull Singed in to Baggage App </h3>
                         <h3>Click <a href='http://localhost:4200/user'>here</a> to Login</h3>
-                         <br/><br/><p> We are happy to see you with us.</p>`
+                         <br/><br/><h3> We are happy to see you with us.</h3><h3> Team BaggageApp</h3>`
             });
             res.send(user);
         } catch (e) {
@@ -87,8 +87,8 @@ export class UserController {
             if (user) {
                 NodeMailer.sendEmail({
                     to: [user.email],
-                    subject: 'Email Verification',
-                    html: `<h2>Hello ${user.name} </h2><h3>Good Day!!! , Welcome to BaggageApp </h3> <p>Your Email varification code is : ${verificationToken}</p> <br/><br/><p> We are happy to see you with us.</p>`
+                    subject: 'BaggageApp - Resent Token',
+                    html: `<h2>Dear ${user.name} </h2><h3>Your Email varification code is : ${verificationToken}</h3> <br/><br/><h3> We are happy to see you with us.</h3><h3>Team BaggageApp<h3/>`
                 });
                 res.send(user);
             } else {
@@ -128,6 +128,13 @@ export class UserController {
             await Utils.passwordCompare({ "password": password, "encryptPassword": user.password });
             const encryptPassword = await Utils.encryptPassword(newPassword);
             const newUser = await User.findOneAndUpdate({ "_id": user_id }, { "password": encryptPassword }, { new: true });
+            if (newUser) {
+                NodeMailer.sendEmail({
+                    to: [user.email],
+                    subject: 'BaggageApp - Password reseted successfully',
+                    html: `<h2>Dear ${user.name} </h2><h3> Your password successfull reseted, Please let us know if you did't </h3> <br/><br/><h3> We are happy to see you with us.</h3><h3>Team BaggaeApp</h3>`
+                });
+            }
             res.send(newUser);
         } catch (e) {
             next(e);
@@ -138,7 +145,7 @@ export class UserController {
         const email = req.query.email;
         const resetPasswordToken = Utils.generateVerificationToken();
         try {
-            const updatedUser = await User.findOneAndUpdate(
+            const updatedUser: any = await User.findOneAndUpdate(
                 { "email": email },
                 {
                     "updated_at": new Date,
@@ -149,12 +156,13 @@ export class UserController {
                     new: true
                 }
             );
-            res.send(updatedUser);
+
             await NodeMailer.sendEmail({
                 to: [email],
-                subject: 'Reset Password Email',
-                html: `<h2>Hello Dear </h2><h3>Good Day!!! </h3> <p>Your Reset Password code is : ${resetPasswordToken}</p> <br/><br/><p> We are happy to see you with us.</p>`
+                subject: 'BaggageApp - Reset Password',
+                html: `<h2>Dear ${updatedUser.name}</h2><h3>Your Reset Password code is : ${resetPasswordToken}</h3> <br/><br/><h3> We are happy to see you with us.</h3><h3>Team BaggageApp</h3>`
             });
+            res.send(updatedUser);
         } catch (e) {
             next(e)
         }
@@ -169,7 +177,7 @@ export class UserController {
         const newPassword = req.body.new_password;
         try {
             const encryptPassword = await Utils.encryptPassword(newPassword);
-            const updatedUser = await User.findOneAndUpdate(
+            const updatedUser: any = await User.findOneAndUpdate(
                 { "_id": user._id },
                 {
                     "updated_at": new Date(),
@@ -179,6 +187,11 @@ export class UserController {
                     new: true
                 }
             )
+            await NodeMailer.sendEmail({
+                to: [updatedUser.email],
+                subject: 'BaggageApp - Password reseted',
+                html: `<h2>Dear ${updatedUser.name}</h2><h3>Your password has been reseted successfully.</h3> <br/><br/><h3> We are happy to see you with us.</h3><h3>Team BaggageApp</h3>`
+            });
             res.send(updatedUser);
         } catch (e) {
             next(e);
