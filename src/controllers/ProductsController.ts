@@ -1,3 +1,4 @@
+import Product from "../models/Product";
 import Products from "../models/Product";
 
 export class ProductsController {
@@ -49,6 +50,15 @@ export class ProductsController {
             res.send(product);
         } catch (e) {
             next(e);
+        }
+    }
+
+    static async GetProducts(req, res, next) {
+        try {
+            const products: any = await Products.find();
+            res.send(products);
+        } catch (e) {
+            next(e)
         }
     }
 }
