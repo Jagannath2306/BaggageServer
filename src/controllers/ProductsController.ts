@@ -61,4 +61,13 @@ export class ProductsController {
             next(e)
         }
     }
+    static async GetProduct(req, res, next) {
+        const product_id = req.query._id;
+        try {
+            const product: any = await Products.findOne({ "_id": product_id });
+            res.send(product);
+        } catch (e) {
+            next(e)
+        }
+    }
 }

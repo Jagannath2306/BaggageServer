@@ -251,6 +251,5 @@ export class UserController {
         } catch (e) {
             next(e)
         }
-
     }
 }

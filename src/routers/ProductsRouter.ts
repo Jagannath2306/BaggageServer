@@ -19,6 +19,7 @@ class ProductsRouter {
 
     getRoutes() {
         this.router.get('/get/products', GlobalMiddleWare.checkError, ProductsController.GetProducts);
+        this.router.get('/get/product', ProductsValidater.GetProduct(), GlobalMiddleWare.checkError, ProductsController.GetProduct);
     }
 
     postRoutes() {

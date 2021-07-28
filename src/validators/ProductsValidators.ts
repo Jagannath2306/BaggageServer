@@ -27,4 +27,9 @@ export class ProductsValidater {
             body("itemPattern", "Item Pattern is Required")
         ]
     }
+    static GetProduct() {
+        return [
+            query("_id", "ID is Required")
+        ]
+    }
 }
