@@ -36,11 +36,11 @@ class UserRouter {
         this.router.patch('/update/profile', GlobalMiddleWare.authenticate, GlobalMiddleWare.checkError, UserController.UpdateProfile);
         this.router.patch('/update/profilePic', GlobalMiddleWare.authenticate,
             new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);
-
+        this.router.patch('/update/cart', GlobalMiddleWare.authenticate, UserValidators.userCart(), GlobalMiddleWare.checkError, UserController.UserCart);
     }
 
     deleteRoutes() {
-
+        this.router.delete('/update/cart/delete', GlobalMiddleWare.authenticate, UserValidators.userCartDelete(), GlobalMiddleWare.checkError, UserController.userCartDelete);
     }
 }
 

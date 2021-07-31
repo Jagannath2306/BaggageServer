@@ -139,6 +139,17 @@ export class UserValidators {
             body("")
         ]
     }
+    static userCart() {
+        return [
+            body("")
+        ]
+    }
+    static userCartDelete() {
+        return [
+            query("")
+        ]
+    }
+
 
     static fatch() {
         console.log();

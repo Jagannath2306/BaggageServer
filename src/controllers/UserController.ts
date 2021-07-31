@@ -243,6 +243,34 @@ export class UserController {
 
     }
 
+    static async UserCart(req, res, next) {
+        const user_email = req.user.email;
+        const user_cartItem = req.body;
+        try {
+            const updatedUserCart = await User.findOneAndUpdate(
+                { "email": user_email }, { $addToSet: { "cart": user_cartItem } }
+            )
+            const updatedUser = await User.findOne({ "email": user_email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    static async userCartDelete(req, res, next) {
+        const email = req.user.email;
+        const item = req.query;
+        try {
+            const deletedUserCart = await User.updateOne(
+                { "email": email }, { $pull: { cart: { "_id": item._id } } }, { new: true }
+            )
+            const updatedUser = await User.findOne({ "email": email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
+
     static async fatchUser(req, res, next) {
         const user_id = req.user.user_id;
         try {
