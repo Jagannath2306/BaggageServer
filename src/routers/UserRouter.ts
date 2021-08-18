@@ -37,6 +37,7 @@ class UserRouter {
         this.router.patch('/update/profilePic', GlobalMiddleWare.authenticate,
             new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);
         this.router.patch('/update/cart', GlobalMiddleWare.authenticate, UserValidators.userCart(), GlobalMiddleWare.checkError, UserController.UserCart);
+        this.router.patch('/update/orders', GlobalMiddleWare.authenticate, UserValidators.userOrders(), GlobalMiddleWare.checkError, UserController.UserOrders);
     }
 
     deleteRoutes() {

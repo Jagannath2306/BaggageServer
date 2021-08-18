@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
         required: false
     },
+    orders: {
+        type: Array,
+        required: false
+    },
     cards: {
         type: Array,
         required: false

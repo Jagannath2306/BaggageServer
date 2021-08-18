@@ -144,6 +144,11 @@ export class UserValidators {
             body("")
         ]
     }
+    static userOrders() {
+        return [
+            body("")
+        ]
+    }
     static userCartDelete() {
         return [
             query("")

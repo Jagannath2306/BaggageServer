@@ -14,6 +14,7 @@ export class UserController {
         const dob = req.body.dateOfBirth;
         const address = req.body.address;
         const cart = req.body.cart;
+        const orders = req.body.orders;
         const histories = req.body.histories;
         const cards = req.body.cards;
         const profilePhoto = req.body.profilePhoto;
@@ -33,6 +34,7 @@ export class UserController {
                 cart: cart,
                 histories: histories,
                 cards: cards,
+                orders: orders,
                 profilePhoto: profilePhoto,
                 created_at: created_at,
                 updated_at: updated_at,
@@ -248,7 +250,11 @@ export class UserController {
         const user_cartItem = req.body;
         try {
             const updatedUserCart = await User.findOneAndUpdate(
-                { "email": user_email }, { $addToSet: { "cart": user_cartItem } }
+                { "email": user_email },
+                { $addToSet: { "cart": user_cartItem } },
+                {
+                    new: true
+                }
             )
             const updatedUser = await User.findOne({ "email": user_email });
             res.send(updatedUser)
@@ -271,6 +277,19 @@ export class UserController {
         }
     }
 
+    static async UserOrders(req, res, next) {
+        const user_email = req.user.email;
+        const order = req.body;
+        try {
+            const updatedUserOrder = await User.findOneAndUpdate(
+                { "email": user_email }, { $push: { "orders": order } }
+            )
+            const updatedUser = await User.findOne({ "email": user_email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
     static async fatchUser(req, res, next) {
         const user_id = req.user.user_id;
         try {
