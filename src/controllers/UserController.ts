@@ -290,6 +290,49 @@ export class UserController {
             next(e);
         }
     }
+    static async UpdateAddress(req, res, next) {
+        const user_email = req.user.email;
+        const address = req.body;
+        console.log(address)
+        try {
+            const updatedUserOrder = await User.findOneAndUpdate(
+                { "email": user_email }, { $push: { "address": address } }
+            )
+            const updatedUser = await User.findOne({ "email": user_email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
+    static async userAddressDelete(req, res, next) {
+        const email = req.user.email;
+        const item = req.query;
+        console.log(item)
+
+        try {
+            const deletedUserCart = await User.updateOne(
+                { "email": email }, { $pull: { address: { "addressNo": parseInt(item.addressNo) } } }, { new: true }
+            )
+            const updatedUser = await User.findOne({ "email": email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
+    static async UpdateCards(req, res, next) {
+        const user_email = req.user.email;
+        const card = req.body;
+        console.log(card)
+        try {
+            const updatedUserOrder = await User.findOneAndUpdate(
+                { "email": user_email }, { $push: { "cards": card } }
+            )
+            const updatedUser = await User.findOne({ "email": user_email });
+            res.send(updatedUser)
+        } catch (e) {
+            next(e);
+        }
+    }
     static async fatchUser(req, res, next) {
         const user_id = req.user.user_id;
         try {

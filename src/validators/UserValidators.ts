@@ -149,12 +149,26 @@ export class UserValidators {
             body("")
         ]
     }
+    static userAddress() {
+        return [
+            body("")
+        ]
+    }
+    static userAddressDelete() {
+        return [
+            body("")
+        ]
+    }
     static userCartDelete() {
         return [
             query("")
         ]
     }
-
+    static userCards() {
+        return [
+            body("")
+        ]
+    }
 
     static fatch() {
         console.log();

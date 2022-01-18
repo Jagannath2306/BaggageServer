@@ -38,10 +38,13 @@ class UserRouter {
             new Utils().Multer.single('profilePhoto'), UserValidators.updateProfilePic(), GlobalMiddleWare.checkError, UserController.uploadProfilePic);
         this.router.patch('/update/cart', GlobalMiddleWare.authenticate, UserValidators.userCart(), GlobalMiddleWare.checkError, UserController.UserCart);
         this.router.patch('/update/orders', GlobalMiddleWare.authenticate, UserValidators.userOrders(), GlobalMiddleWare.checkError, UserController.UserOrders);
+        this.router.patch('/update/address', GlobalMiddleWare.authenticate, UserValidators.userAddress(), GlobalMiddleWare.checkError, UserController.UpdateAddress);
+        this.router.patch('/update/cards', GlobalMiddleWare.authenticate, UserValidators.userCards(), GlobalMiddleWare.checkError, UserController.UpdateCards);
     }
 
     deleteRoutes() {
         this.router.delete('/update/cart/delete', GlobalMiddleWare.authenticate, UserValidators.userCartDelete(), GlobalMiddleWare.checkError, UserController.userCartDelete);
+        this.router.delete('/delete/address', GlobalMiddleWare.authenticate, UserValidators.userAddressDelete(), GlobalMiddleWare.checkError, UserController.userAddressDelete);
     }
 }
 
